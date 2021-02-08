@@ -1,10 +1,16 @@
 #include <string.h>
+/*
+ * returns the length of string str
+ */
 size_t strlen(str){
 	size_t i = 0;
 	while(*(char*)(str+i) != 0)
 		i++;
 	return i;
 }
+/*
+ * returns 0 if str1 and str2 are equal else the difference in the first differing byte
+ */
 int strcmp(str1,str2){
 	size_t i = 0;
 	if(strlen(str1) != strlen(str2)){
@@ -17,9 +23,14 @@ int strcmp(str1,str2){
 	}
 	return 0;
 }
+
 unsigned long min(a,b){
 	return a < b ? a : b;
 }
+/*
+ * compares the first n bytes of str1 and str2 and returns 0 if equal else the difference in the first 
+ * differing byte
+ */
 int strncmp(str1,str2,n){
 	size_t i = 0;
 	while(i < n){
@@ -32,6 +43,9 @@ int strncmp(str1,str2,n){
 	}
 	return 0;
 }
+/*
+ * compares the first n bytes of two void pntrs
+ */
 int memcmp(pntr1,pntr2,n){
 	size_t i = 0;
 	while(i < n){
@@ -41,6 +55,9 @@ int memcmp(pntr1,pntr2,n){
 	}
 	return i;
 }
+/*
+ * copys n bytes of src to dest
+ */
 void *memcpy(dest,src,n){
 	size_t i = 0;
 	while(i < n){
@@ -49,12 +66,21 @@ void *memcpy(dest,src,n){
 	}
 	return dest;
 }
+/*
+ * copys strlen(src) bytes of src to dest
+ */
 char *strcpy(dest,src){
 	return memcpy(dest,src,strlen(src));
 }
+/*
+ * cats src to the end of dest
+ */
 char *strcat(dest,src){
 	return memcpy(dest + strlen(dest),src,strlen(src));
 }
+/*
+ * copys n bytes of src or however long src is to dest
+ */
 char *strncpy(dest,src,n){
 	memcpy(dest,src,min(n,strlen(src)));
 }

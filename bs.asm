@@ -2,6 +2,7 @@
 [org 0x7c00]
 section .text
 _start:
+;initialize registers
 xor ax,ax
 xor bx,bx
 xor cx,cx
@@ -11,16 +12,17 @@ mov di,ax
 mov sp,0xffff
 push bp
 mov bp,sp
+;prepare for int 13h
 mov ah,0x42
 mov byte [0x2000],dl
-mov word [DAP.sectors],1
+mov word [DAP.sectors],63
 mov word [DAP.lba],1
 mov word [DAP.offset],0x7e00
 mov bx,DAP
 mov si,bx
-int 0x13
-jc err
-jmp 0:0x7e00
+int 0x13;read disk
+jc err;error cache
+jmp 0:0x7e00; jump to krnl16.com
 pop bp
 hng:jmp hng
 err:
@@ -30,6 +32,7 @@ push errmsg
 call puts
 add sp,2
 jmp hng
+;put string
 puts:push bp
 mov bp,sp
 mov bx,[bp+4]
